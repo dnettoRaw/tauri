@@ -32,15 +32,10 @@
       "category": "DeveloperTool",
       "shortDescription": "simple inti off new app",
       "longDescription": "here you can take your time to explain all cool features your app do",
-      "deb": {
-        "depends": [],
-        "useBootstrapper": false
-      },
       "macOS": {
         "frameworks": [],
         "minimumSystemVersion": "10.13",
         "providerShortName":"tauri-template",
-        "useBootstrapper": false,
         "exceptionDomain": "",
         "signingIdentity": null,
         "entitlements": null
