@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*  menus.rs                                                  #####           */
+/*  menu.rs                                                   #####           */
 /*                                                         ############       */
 /*  By: dnettoRaw <contact@dnetto.dev>                   ###          ###     */
 /*                                                      ##    ##  ##    ##    */
@@ -9,50 +9,59 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/03 15:36:40 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/03 15:36:43 by dnettoRaw                                 */
+/*  Updated: 2022/06/10 13:02:22 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
 #[allow(unused_imports)]
+use serde_json::Value::Null;
 use tauri::{CustomMenuItem, Manager, Menu, MenuEntry, MenuItem, Submenu, WindowBuilder, WindowUrl,AboutMetadata};
 
 use tauri::api::shell;
 
-pub fn drMenu() -> Menu {
-  #[allow(unused_mut)]
-  let mut disable_item =
-    CustomMenuItem::new("disable-menu", "Disable menu").accelerator("CmdOrControl+D");
-  #[allow(unused_mut)]
-  let mut test_item = CustomMenuItem::new("test", "Test").accelerator("CmdOrControl+T");
-  #[cfg(target_os = "macos")]
-  {
-    disable_item = disable_item.native_image(tauri::NativeImage::MenuOnState);
-    test_item = test_item.native_image(tauri::NativeImage::Add);
-  }
+pub fn dr_menu() -> Menu {
+  // #[allow(unused_mut)]
+  // let mut disable_item =
+  //   CustomMenuItem::new("disable-menu", "Disable menu").accelerator("CmdOrControl+D");
+  // #[allow(unused_mut)]
+  // let mut test_item = CustomMenuItem::new("test", "Test").accelerator("CmdOrControl+T");
+  // #[cfg(target_os = "macos")]
+  // {
+  //   disable_item = disable_item.native_image(tauri::NativeImage::MenuOnState);
+  //   test_item = test_item.native_image(tauri::NativeImage::Add);
+  // }
 
-  // create a submenu
-  let my_sub_menu = Menu::with_items([disable_item.into()]);
+  // // create a submenu
+  // let my_sub_menu = Menu::with_items([disable_item.into()]);
 
-  let my_app_menu = Menu::new()
-    .add_native_item(MenuItem::Copy)
-    .add_submenu(Submenu::new("Sub menu", my_sub_menu));
+  // let my_app_menu = Menu::new()
+  //   .add_native_item(MenuItem::Copy)
+  //   .add_submenu(Submenu::new("Sub menu", my_sub_menu));
 
-  let test_menu = Menu::new()
-    .add_item(CustomMenuItem::new(
-      "selected/disabled",
-      "Selected and disabled",
-    ))
-    .add_native_item(MenuItem::Separator)
-    .add_item(test_item);
+  // let test_menu = Menu::new()
+  //   .add_item(CustomMenuItem::new(
+  //     "selected/disabled",
+  //     "Selected and disabled",
+  //   ))
+  //   .add_native_item(MenuItem::Separator)
+  //   .add_item(test_item);
+  let ctx = tauri::generate_context!();
+  let mut _my_app = Menu::new().add_native_item(MenuItem::Copy);
+  let mut _file = Menu::new();
+  let mut _edit = Menu::new();
+  let mut _help = Menu::new();
+
 
   // add all our childs to the menu (order is how they'll appear)
   Menu::new()
-    .add_submenu(Submenu::new("My app", my_app_menu))
-    .add_submenu(Submenu::new("Other menu", test_menu))
-    .add_submenu(Submenu::new("help",Menu::with_items([CustomMenuItem::new("Learn More", "Learn More").into()])))
+    .add_submenu(Submenu::new(&ctx.package_info().name, _my_app))
+    .add_submenu(Submenu::new("File", _file))
+    .add_submenu(Submenu::new("Edit", _edit))
+    .add_submenu(Submenu::new("Help", _help))
+    // .add_submenu(Submenu::new("Help",Menu::with_items([CustomMenuItem::new("Learn More", "Learn More").into()])))
 }
 
-pub fn drEvent(event: tauri::WindowMenuEvent){  
+pub fn dr_event(event: tauri::WindowMenuEvent){  
     let event_name = event.menu_item_id();
     match event_name {
       "Learn More" => {

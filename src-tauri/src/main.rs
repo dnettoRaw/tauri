@@ -4,7 +4,8 @@
   windows_subsystem = "windows"
 )]
 
-use crate::menus::{drMenu, drEvent};
+mod menu_toolbar;
+use crate::menu_toolbar::menu::{dr_menu, dr_event};
 
 fn main() {
 //   let tray_menu1 = SystemTrayMenu::new()
@@ -27,8 +28,8 @@ fn main() {
   // let aboutMe = AboutMetadata::new();
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![])
-    .menu(menus::drMenu())
-    .on_menu_event(menus::drEvent)
+    .menu(dr_menu())
+    .on_menu_event(dr_event)
     .run(ctx)
     .expect("error while running tauri application");
 }
