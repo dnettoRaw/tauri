@@ -1,6 +1,6 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*  menu-windows.rs                                           #####           */
+/*  menu_windows.rs                                           #####           */
 /*                                                         ############       */
 /*  By: dnettoRaw <contact@dnetto.dev>                   ###          ###     */
 /*                                                      ##    ##  ##    ##    */
@@ -9,7 +9,22 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/02 16:38:13 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/02 16:52:38 by dnettoRaw                                 */
+/*  Updated: 2022/06/10 14:11:21 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
+
+use tauri::{Menu};
+
+pub fn get_my_app() -> Menu {
+    Menu::with_items([])
+  }
+  pub fn get_file() -> Menu {
+    Menu::with_items([])
+  }
+  pub fn get_edit() -> Menu {
+    Menu::with_items([])
+  }
+  pub fn get_help() -> Menu {
+    Menu::with_items([])
+  }
