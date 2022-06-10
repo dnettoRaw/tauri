@@ -9,7 +9,7 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/03 15:36:40 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/10 14:22:49 by dnettoRaw                                 */
+/*  Updated: 2022/06/10 20:03:46 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ use crate::menu_toolbar::{menu_android,menu_ios,menu_linux,menu_mac,menu_windows
 
 pub fn dr_menu() -> Menu {
 
-  let ctx = tauri::generate_context!();
   let mut _my_app = Menu::new().add_native_item(MenuItem::Copy);
   let mut _file = Menu::new();
   let mut _edit = Menu::new();

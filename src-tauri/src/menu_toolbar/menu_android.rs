@@ -9,10 +9,11 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/02 16:50:47 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/10 14:12:01 by dnettoRaw                                 */
+/*  Updated: 2022/06/10 20:07:20 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
+#![allow(dead_code)]
 use tauri::{Menu};
 
 pub fn get_my_app() -> Menu {

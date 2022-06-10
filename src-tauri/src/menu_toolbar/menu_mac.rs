@@ -9,10 +9,12 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/02 16:54:27 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/10 14:10:53 by dnettoRaw                                 */
+/*  Updated: 2022/06/10 20:07:10 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
+#![allow(dead_code)]
+#[allow(unused_imports)]
 use tauri::{CustomMenuItem,
     Manager,
     Menu,
