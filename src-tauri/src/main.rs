@@ -5,6 +5,7 @@
 )]
 
 mod menu_toolbar;
+mod function;
 use crate::menu_toolbar::menu::{dr_menu, dr_event};
 
 fn main() {

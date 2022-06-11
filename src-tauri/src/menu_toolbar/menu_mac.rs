@@ -9,7 +9,7 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/02 16:54:27 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/10 20:07:10 by dnettoRaw                                 */
+/*  Updated: 2022/06/11 14:25:15 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
@@ -109,6 +109,9 @@ pub fn get_edit() -> Menu {
 }
 pub fn get_help() -> Menu {
   Menu::with_items([
-    CustomMenuItem::new("Learn More", "Learn More").into(),
+    //  firts is Id this need to be same in your functions, secound is the name displayed
+    CustomMenuItem::new("01", "dnetto github").into(),
+    CustomMenuItem::new("02", "dnetto site").into(),
+    CustomMenuItem::new("03", "tauri github").into(),
   ])
 }
