@@ -9,7 +9,7 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/03 15:36:40 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/14 14:55:29 by dnettoRaw                                 */
+/*  Updated: 2022/06/14 16:44:57 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
@@ -23,56 +23,39 @@ use crate::function::social_link;
 
 pub fn dr_menu() -> Menu {
 
-  let mut _my_app : Menu = Menu::new();
-  let mut _file   : Menu = Menu::new();
-  let mut _edit   : Menu = Menu::new();
-  let mut _help   : Menu = Menu::new();
+  // if target_os unknow empty menu 
+  // Menu::new();
 
+  // add all our childs to the menu (order is how they'll appear)
   #[cfg(target_os = "ios")]{
     // unsupported for this tauri vertion
-    let _my_app : Menu = menu_ios::get_my_app();
-    let _file   : Menu = menu_ios::get_file();
-    let _edit   : Menu = menu_ios::get_edit();
-    let _help   : Menu = menu_ios::get_help();
+    Menu::new()
   }
   #[cfg(target_os = "android")]{
     // unsupported for this tauri vertion
-    let _my_app : Menu = menu_android::get_my_app();
-    let _file   : Menu = menu_android::get_file();
-    let _edit   : Menu = menu_android::get_edit();
-    let _help   : Menu = menu_android::get_help();
+    Menu::new()
   }
   #[cfg(target_os = "linux")]{
-    let _my_app : Menu = menu_linux::get_my_app();
-    let _file   : Menu = menu_linux::get_file();
-    let _edit   : Menu = menu_linux::get_edit();
-    let _help   : Menu = menu_linux::get_help();
+    Menu::new()
+      .add_submenu(Submenu::new("app ",menu_linux::get_my_app()))
+      .add_submenu(Submenu::new("File",menu_linux::get_file()))
+      .add_submenu(Submenu::new("Edit",menu_linux::get_edit()))
+      .add_submenu(Submenu::new("Help",menu_linux::get_help()))
   }
   #[cfg(target_os = "windows")]{
-    let _my_app : Menu = menu_windows::get_my_app();
-    let _file   : Menu = menu_windows::get_file();
-    let _edit   : Menu = menu_windows::get_edit();
-    let _help   : Menu = menu_windows::get_help();
+    Menu::new()
+      .add_submenu(Submenu::new("app ",menu_windows::get_my_app()))
+      .add_submenu(Submenu::new("File",menu_windows::get_file()))
+      .add_submenu(Submenu::new("Edit",menu_windows::get_edit()))
+      .add_submenu(Submenu::new("Help",menu_windows::get_help()))
   }
   #[cfg(target_os = "macos")]{
-    let _my_app : Menu = menu_mac::get_my_app();
-    let _file   : Menu = menu_mac::get_file();
-    let _edit   : Menu = menu_mac::get_edit();
-    let _help   : Menu = menu_mac::get_help();
+    Menu::new()
+      .add_submenu(Submenu::new("app ",menu_mac::get_my_app()))
+      .add_submenu(Submenu::new("File",menu_mac::get_file()))
+      .add_submenu(Submenu::new("Edit",menu_mac::get_edit()))
+      .add_submenu(Submenu::new("Help",menu_mac::get_help())) 
   }
-
-
-  // add all our childs to the menu (order is how they'll appear)
-
-  Menu::new()
-    .add_submenu(Submenu::new("app ", _my_app))
-    .add_submenu(Submenu::new("File", _file))
-    .add_submenu(Submenu::new("Edit", _edit))
-    .add_submenu(Submenu::new("Help", _help))
-
-    // another way to do this
-
-
 }
 
 pub fn dr_event(event: tauri::WindowMenuEvent){  

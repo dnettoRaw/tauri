@@ -9,7 +9,7 @@
 /*                                                      ##    ##  ##   ##     */
 /*                                                       ###  ######  ###     */
 /*  Created: 2022/06/02 16:54:27 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/14 15:05:12 by dnettoRaw                                 */
+/*  Updated: 2022/06/14 19:56:45 by dnettoRaw                                 */
 /*                                                    https://dnetto.dev      */
 /* ************************************************************************** */
 
@@ -26,9 +26,17 @@ use tauri::{CustomMenuItem,
     AboutMetadata};
     
 pub fn get_my_app() -> Menu {
+  // for somme raison i dont know this dont work anymore 
+  // let  medata = AboutMetadata::default().authors(vec![String::from("dnetto") , String::from("Raw"), String::from("sommeone")])
+      // .comments(String::from("teste 1"))
+      // .copyright(String::from("teste 2"))
+      // .license(String::from("teste 3"))
+      // .version(String::from("teste 4"))
+      // .website(String::from("dnetto.dev"));
+
   Menu::with_items([
-        // MenuItem::About(ctx.package_info().name.clone(),aboutMe).into(),
-        // MenuItem::Separator.into(),
+        MenuItem::About(String::from("myAppInDev"),AboutMetadata::default()).into(),
+        MenuItem::Separator.into(),
         MenuItem::Services.into(),
         MenuItem::Separator.into(),
         MenuItem::Hide.into(),
