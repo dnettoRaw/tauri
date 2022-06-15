@@ -1,9 +1,20 @@
+/*      #######                                               */
+/*   ###       ###                                            */
+/*  ##   ## ##   ##   F: App.tsx                              */
+/*       ## ##                                                */
+/*                    C: 2022/06/15 16:15:07 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:38:19 by:dnettoRaw     */
+/*    ###########                                             */
+
 import { useState } from 'react'
+import { invoke } from '@tauri-apps/api/tauri'
 import logo from './logo.svg'
 import './App.css'
 
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
+  const invoke = window.__TAURI__.invoke;
 
   return (
     <div className="App">
@@ -14,6 +25,7 @@ function App() {
           <button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
           </button>
+          <button type="button" onClick={() => invoke('my_button')}> let's print in terminal</button>
         </p>
         <p>
           Edit <code>App.tsx</code> and save to test HMR updates. p'

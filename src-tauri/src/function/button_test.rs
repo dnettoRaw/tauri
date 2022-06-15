@@ -1,9 +1,12 @@
 /*      #######                                               */
 /*   ###       ###                                            */
-/*  ##   ## ##   ##   F: vite-env.d.ts                        */
+/*  ##   ## ##   ##   F: button_test.rs                       */
 /*       ## ##                                                */
-/*                    C: 2022/06/15 16:15:34 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/15 16:15:36 by:dnettoRaw     */
+/*                    C: 2022/06/15 16:14:24 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:34:31 by:dnettoRaw     */
 /*    ###########                                             */
 
-/// <reference types="vite/client" />
+#[tauri::command]
+pub fn my_button(){
+    println!("banana?");
+}

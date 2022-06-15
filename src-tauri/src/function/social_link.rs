@@ -1,3 +1,11 @@
+/*      #######                                               */
+/*   ###       ###                                            */
+/*  ##   ## ##   ##   F: social_link.rs                       */
+/*       ## ##                                                */
+/*                    C: 2022/06/15 16:14:12 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:14:14 by:dnettoRaw     */
+/*    ###########                                             */
+
 
 use tauri::{Manager};
 use tauri::api::shell;

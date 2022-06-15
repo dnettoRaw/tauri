@@ -1,17 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*  menu_mac.rs                                               #####           */
-/*                                                         ############       */
-/*  By: dnettoRaw <contact@dnetto.dev>                   ###          ###     */
-/*                                                      ##    ##  ##    ##    */
-/*  obs:                                                      ##  ##          */
-/*                                                                            */
-/*                                                      ##    ##  ##   ##     */
-/*                                                       ###  ######  ###     */
-/*  Created: 2022/06/02 16:54:27 by dnettoRaw             #####    ####       */
-/*  Updated: 2022/06/14 19:56:45 by dnettoRaw                                 */
-/*                                                    https://dnetto.dev      */
-/* ************************************************************************** */
+/*      #######                                               */
+/*   ###       ###                                            */
+/*  ##   ## ##   ##   F: menu_mac.rs                          */
+/*       ## ##                                                */
+/*                    C: 2022/06/15 16:13:39 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:13:43 by:dnettoRaw     */
+/*    ###########                                             */
+
 
 #![allow(dead_code)]
 #[allow(unused_imports)]
@@ -71,3 +65,13 @@ pub fn get_help() -> Menu {
     CustomMenuItem::new("03", "tauri github").into(),
   ])
 }
+
+
+// use tauri::{CustomMenuItem, SystemTray, SystemTrayMenu, SystemTrayMenuItem};
+// let quit = CustomMenuItem::new("quit".to_string(), "Quit");
+// let hide = CustomMenuItem::new("hide".to_string(), "Hide");
+// let tray_menu = SystemTrayMenu::new()
+//   .add_item(quit)
+//   .add_native_item(SystemTrayMenuItem::Separator)
+//   .add_item(hide);
+//   let system_trayw = SystemTray::new().with_menu(tray_menu);
