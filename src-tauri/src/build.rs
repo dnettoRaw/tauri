@@ -1,3 +1,11 @@
+/*      #######                                               */
+/*   ###       ###                                            */
+/*  ##   ## ##   ##   F: build.rs                             */
+/*       ## ##                                                */
+/*                    C: 2022/06/15 16:11:41 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:51:46 by:dnettoRaw     */
+/*    ###########                                             */
+
 use tauri_build::{try_build, Attributes, WindowsAttributes};
 
 fn main() {

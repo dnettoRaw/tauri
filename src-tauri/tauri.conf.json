@@ -1,24 +1,37 @@
 {
-  "package": {
-    "productName": "My Super App Name",
-    "version":"../package.json"
-  },
+  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "distDir": "../dist",
-    "devPath": "http://127.0.0.1:3000",
+    "withGlobalTauri": true,
+    "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build"
+    "devPath": "http://localhost:3000",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "my app name",
+    "version": "../package.json"
   },
   "tauri": {
+    "systemTray": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "allowlist": {
+      "all": true,
+      "clipboard": {
+        "all": true,
+        "readText": true,
+        "writeText": true
+      }
+    },
     "bundle": {
       "active": true,
-      "targets": [
-        "dmg",
-        "deb",
-        "appimage",
-        "msi"
-      ],
-      "identifier": "com.example.tauri-template",
+      "copyright": "© 2022 dnettoRaw",
+      "category": "DeveloperTool",
+      "deb": {
+        "depends": []
+      },
+      "externalBin": [],
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
@@ -26,36 +39,40 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "resources": [],
-      "externalBin": [],
-      "copyright": "© 2022 tauri-template",
-      "category": "DeveloperTool",
-      "shortDescription": "simple inti off new app",
-      "longDescription": "here you can take your time to explain all cool features your app do",
+      "identifier": "com.template.dev",
+      "longDescription": "",
       "macOS": {
+        "entitlements": null,
+        "exceptionDomain": "",
         "frameworks": [],
         "minimumSystemVersion": "10.13",
-        "providerShortName":"tauri-template",
-        "exceptionDomain": "",
-        "signingIdentity": null,
-        "entitlements": null
+        "providerShortName": "template",
+        "signingIdentity": null
       },
+      "resources": [],
+      "shortDescription": "",
+      "targets": "all",
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "http://timestamp.sectigo.com"
       }
     },
+    "security": {
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+   },
     "updater": {
       "active": false
     },
-    "allowlist": {
-      "shell": {
-        "open": true
+    "windows": [
+      {
+        "label": "Main",
+        "title": "template",
+        "fullscreen": false,
+        "resizable": true,
+        "height": 600,
+        "width": 800
       }
-    },	
-		"security": {
-			"csp": "default-src blob: data: filesystem: ws: http: https: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
-		}
+    ]
   }
 }

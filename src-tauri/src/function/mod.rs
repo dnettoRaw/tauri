@@ -1,9 +1,10 @@
 /*      #######                                               */
 /*   ###       ###                                            */
-/*  ##   ## ##   ##   F: vite-env.d.ts                        */
+/*  ##   ## ##   ##   F: mod.rs                               */
 /*       ## ##                                                */
-/*                    C: 2022/06/15 16:15:34 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/15 16:49:16 by:dnettoRaw     */
+/*                    C: 2022/06/15 16:14:16 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/15 16:27:37 by:dnettoRaw     */
 /*    ###########                                             */
 
-/// <reference types="vite/client" />
+pub mod social_link;
+pub mod button_test;
