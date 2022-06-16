@@ -3,7 +3,7 @@
 /*  ##   ## ##   ##   F: menu.rs                              */
 /*       ## ##                                                */
 /*                    C: 2022/06/03 16:12:26 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/15 16:12:53 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/16 14:22:42 by:dnettoRaw     */
 /*    ###########                                             */
 
 
@@ -12,7 +12,7 @@ use tauri::{Menu, MenuItem, Submenu};
 
 
 #[allow(unused_imports)]
-use crate::menu_toolbar::{menu_android,menu_ios,menu_linux,menu_mac,menu_windows};
+use crate::menu_toolbar::{android,ios,linux,mac,windows};
 use crate::function::social_link;
 
 pub fn dr_menu() -> Menu {
@@ -31,24 +31,25 @@ pub fn dr_menu() -> Menu {
   }
   #[cfg(target_os = "linux")]{
     Menu::new()
-      .add_submenu(Submenu::new("app ",menu_linux::get_my_app()))
-      .add_submenu(Submenu::new("File",menu_linux::get_file()))
-      .add_submenu(Submenu::new("Edit",menu_linux::get_edit()))
-      .add_submenu(Submenu::new("Help",menu_linux::get_help()))
+      .add_submenu(Submenu::new("app ", linux::get_my_app()))
+      .add_submenu(Submenu::new("File", linux::get_file()))
+      .add_submenu(Submenu::new("Edit", linux::get_edit()))
+      .add_submenu(Submenu::new("Help", linux::get_help()))
   }
   #[cfg(target_os = "windows")]{
     Menu::new()
-      .add_submenu(Submenu::new("app ",menu_windows::get_my_app()))
-      .add_submenu(Submenu::new("File",menu_windows::get_file()))
-      .add_submenu(Submenu::new("Edit",menu_windows::get_edit()))
-      .add_submenu(Submenu::new("Help",menu_windows::get_help()))
+      .add_submenu(Submenu::new("app ", windows::get_my_app()))
+      .add_submenu(Submenu::new("File", windows::get_file()))
+      .add_submenu(Submenu::new("Edit", windows::get_edit()))
+      .add_submenu(Submenu::new("Help", windows::get_help()))
   }
   #[cfg(target_os = "macos")]{
     Menu::new()
-      .add_submenu(Submenu::new("app ",menu_mac::get_my_app()))
-      .add_submenu(Submenu::new("File",menu_mac::get_file()))
-      .add_submenu(Submenu::new("Edit",menu_mac::get_edit()))
-      .add_submenu(Submenu::new("Help",menu_mac::get_help())) 
+      .add_submenu(Submenu::new("app ", mac::get_my_app()))
+      .add_submenu(Submenu::new("File", mac::get_file()))
+      .add_submenu(Submenu::new("Edit", mac::get_edit()))
+      .add_submenu(Submenu::new("Window", mac::get_window()))
+      .add_submenu(Submenu::new("Help", mac::get_help())) 
   }
 }
 

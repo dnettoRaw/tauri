@@ -1,9 +1,9 @@
 /*      #######                                               */
 /*   ###       ###                                            */
-/*  ##   ## ##   ##   F: menu_mac.rs                          */
+/*  ##   ## ##   ##   F: mac.rs                               */
 /*       ## ##                                                */
 /*                    C: 2022/06/15 16:13:39 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/16 13:58:35 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/16 14:37:57 by:dnettoRaw     */
 /*    ###########                                             */
 
 
@@ -59,10 +59,24 @@ pub fn get_edit() -> Menu {
 }
 pub fn get_help() -> Menu {
   Menu::with_items([
+    MenuItem::Separator.into(),
     //  firts is Id this need to be same in your functions, secound is the name displayed
     CustomMenuItem::new("01", "dnetto github").into(),
     CustomMenuItem::new("02", "dnetto site").into(),
     CustomMenuItem::new("03", "tauri github").into(),
+  ])
+}
+
+pub fn get_window() -> Menu {
+  Menu::with_items([
+      MenuItem::Minimize.into(),
+      MenuItem::Zoom.into(),
+      MenuItem::Separator.into(),
+      MenuItem::Hide.into(),
+      MenuItem::HideOthers.into(),
+      MenuItem::ShowAll.into(),
+      MenuItem::Separator.into(),
+      MenuItem::CloseWindow.into(),
   ])
 }
 

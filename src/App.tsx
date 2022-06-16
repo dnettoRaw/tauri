@@ -3,7 +3,7 @@
 /*  ##   ## ##   ##   F: App.tsx                              */
 /*       ## ##                                                */
 /*                    C: 2022/06/15 16:15:07 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/15 16:38:19 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/16 14:48:39 by:dnettoRaw     */
 /*    ###########                                             */
 
 import { useState } from 'react'
@@ -14,7 +14,7 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0);
-  const invoke = window.__TAURI__.invoke;
+  const invoked = window.__TAURI__.invoke;
 
   return (
     <div className="App">
@@ -25,10 +25,12 @@ function App() {
           <button type="button" onClick={() => setCount((count) => count + 1)}>
             count is: {count}
           </button>
-          <button type="button" onClick={() => invoke('my_button')}> let's print in terminal</button>
+          <button type="button" onClick={() => invoked('my_button')}> let's print in terminal</button>
+          <br/>
+          <input name="mytext" type="text"></input>
         </p>
         <p>
-          Edit <code>App.tsx</code> and save to test HMR updates. p'
+          Edit <code>App.tsx</code> and save to test HMR updates.
         </p>
         <p>
           <a
