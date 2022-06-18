@@ -3,13 +3,26 @@
 /*  ##   ## ##   ##   F: App.tsx                              */
 /*       ## ##                                                */
 /*                    C: 2022/06/15 16:15:07 by:dnettoRaw     */
-/*  ##   ## ##   ##   U: 2022/06/16 14:48:39 by:dnettoRaw     */
+/*  ##   ## ##   ##   U: 2022/06/18 13:18:42 by:dnettoRaw     */
 /*    ###########                                             */
 
 import { useState } from 'react'
 import { invoke } from '@tauri-apps/api/tauri'
 import logo from './logo.svg'
 import './App.css'
+
+// function runCommand(commandName: any, args: any, optional: any) {
+//   const id = optional ? '#response-optional' : '#response'
+//   const result = document.querySelector(id)
+//   window.__TAURI__
+//     .invoke(commandName, args)
+//     .then((response) => {
+//       result.innerText = `Ok(${response})`
+//     })
+//     .catch((error) => {
+//       result.innerText = `Err(${error})`
+//     })
+// }
 
 
 function App() {
