@@ -1,3 +1,11 @@
+#       #######                                                #
+#    ###       ###                                             #
+#   ##   ## ##   ##   F: release-version.yml                   #
+#        ## ##                                                 #
+#                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/18 18:01:50 by:dnettoRaw      #
+#     ###########                                              #
+
 name: Release
 on:
   push:

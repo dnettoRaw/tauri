@@ -1,3 +1,11 @@
+#       #######                                                #
+#    ###       ###                                             #
+#   ##   ## ##   ##   F: actions.yml                           #
+#        ## ##                                                 #
+#                     C: 2022/06/18 18:00:37 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/18 18:00:40 by:dnettoRaw      #
+#     ###########                                              #
+
 name: "test-on-pr"
 on: [pull_request]
 
