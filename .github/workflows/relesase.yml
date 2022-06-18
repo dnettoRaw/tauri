@@ -6,11 +6,10 @@ on:
 
 jobs:
   publish-tauri:
-    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [ self-hosted, macos-latest, ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
