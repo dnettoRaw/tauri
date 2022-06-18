@@ -17,6 +17,9 @@
       "iconAsTemplate": true
     },
     "allowlist": {
+      "path": {
+        "all": true 
+      },
       "all": true,
       "clipboard": {
         "all": true,
