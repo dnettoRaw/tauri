@@ -42,8 +42,8 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.template.dev",
-      "longDescription": "",
+      "identifier": "com.dnetto.dev",
+      "longDescription": "this is a long description",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
