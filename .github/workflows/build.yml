@@ -1,0 +1,67 @@
+#       #######                                                #
+#    ###       ###                                             #
+#   ##   ## ##   ##   F: build.yml                             #
+#        ## ##                                                 #
+#                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 08:57:13 by:dnettoRaw      #
+#     ###########                                              #
+
+name: Build
+
+on: 
+  push:
+    branches:
+      - release
+
+jobs:
+  build:
+    name: ${{ matrix.kind }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macOs-latest]
+
+    env:
+      RUST_VERSION: 1.43.1
+      NODE_VERSION: 12
+      GH_ACTIONS: true
+      RUST_BACKTRACE: full
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Install rust
+        uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ env.RUST_VERSION }}
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install webkit2gtk
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0
+
+      - name: Build application
+        run: |
+          cargo install tauri-bundler
+          yarn
+          yarn tauri build
+
+      - name: Release App
+        uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "tauri release"
+          draft: true
+          files: |
+            src-tauri/target/release/bundle/dmg/myapp.dmg
+            src-tauri/target/release/bundle/deb/myapp.deb
+            src-tauri/target/release/bundle/msi/myapp.msi

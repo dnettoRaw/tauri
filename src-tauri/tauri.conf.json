@@ -8,7 +8,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "my app name",
+    "productName": "myapp",
     "version": "../package.json"
   },
   "tauri": {
