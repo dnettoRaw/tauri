@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 11:06:58 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 11:10:29 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -50,7 +50,6 @@ jobs:
 
       - name: Build application
         run: |
-          cargo install tauri-bundler 
           yarn
           yarn tauri build
 
