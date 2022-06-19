@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 10:53:45 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 10:55:43 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -40,7 +40,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 12
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: install webkit2gtk
         if: matrix.os == 'ubuntu-latest'
