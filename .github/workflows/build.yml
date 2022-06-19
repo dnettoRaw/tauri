@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 09:04:06 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 09:18:54 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -25,7 +25,6 @@ jobs:
     env:
       RUST_VERSION: 1.43.1
       NODE_VERSION: 12
-      TAURI_VERSION: 1.0.0-rc.13
       GH_ACTIONS: true
       RUST_BACKTRACE: full
 
@@ -51,7 +50,7 @@ jobs:
 
       - name: Build application
         run: |
-          cargo install tauri-bundler --version "${{ env.TAURI_VERSION }}"
+          cargo install tauri-bundler 
           yarn
           yarn tauri build
 
