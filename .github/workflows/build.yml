@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 10:30:39 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 10:53:45 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -20,11 +20,11 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macOs-latest]
+        os: [ self-hosted ] #windows-latest, ubuntu-latest, macOs-latest]
 
     env:
-      RUST_VERSION: 1.43.1
-      NODE_VERSION: 12
+      RUST_VERSION: 1.61.0
+      NODE_VERSION: 18.3
       GH_ACTIONS: true
       RUST_BACKTRACE: full
 
