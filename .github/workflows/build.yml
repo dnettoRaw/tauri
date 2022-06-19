@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 10:55:43 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 11:06:58 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        os: [ self-hosted ] #windows-latest, ubuntu-latest, macOs-latest]
+        os: [windows-latest, ubuntu-latest, macOs-latest]
 
     env:
       RUST_VERSION: 1.61.0
@@ -50,8 +50,9 @@ jobs:
 
       - name: Build application
         run: |
-          npm install
-          npm run tauri build
+          cargo install tauri-bundler 
+          yarn
+          yarn tauri build
 
       - name: Release App
         uses: softprops/action-gh-release@master
