@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 14:08:31 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 14:25:14 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -75,7 +75,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
+          asset_path: ./src-tauri/target/release/bundle/msi/my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
           asset_name: my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
           asset_content_type: application/octet-stream
       # Linux
@@ -86,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
+          asset_path: ./src-tauri/target/release/bundle/deb/my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
           asset_name: my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
           asset_content_type: application/octet-stream
       # Mac
@@ -97,7 +97,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
+          asset_path: ./src-tauri/target/release/bundle/dmg/my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
           asset_name: my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
           asset_content_type: application/octet-stream
       - name: Remove useless folders
@@ -108,6 +108,10 @@ jobs:
           
           rm -rf src-tauri/target/release/bundle
         shell: bash
+      - name: log
+        run: >
+          echo "::set-output name=version::${{steps.version.outputs.prop}}"
+          ls -la
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
