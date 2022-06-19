@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/18 18:00:48 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 14:08:31 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -29,7 +29,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v1
         with:
-          node-version: 16
+          node-version: 18.3
       - name: Install rust stable
         uses: actions-rs/toolchain@v1
         with:
@@ -38,7 +38,7 @@ jobs:
         if: matrix.NAME == 'linux'
         run: >
           sudo apt-get update
-
+          
           sudo apt-get install -y webkit2gtk-4.0
       - name: Install app dependencies and build it
         run: npm i && npm run build

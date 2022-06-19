@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 13:52:11 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 14:10:11 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -70,5 +70,5 @@ jobs:
       
       - name: echo
         run: |
-          echo "${{matrix.NAME}} ${{ matrix.os }} ${{ matrix.kind }}  v__VERSION__  v__NAME__" 
+          echo "${{matrix.NAME}} ${{ matrix.os }} ${{ matrix.kind }}  v__VERSION__  v__NAME__ ${{ steps.get_upload_url.outputs.url }} ${{ steps.version.outputs.version }} ${{ steps.get_latest_release.outputs.data }} " 
           echo "Build finished" 
