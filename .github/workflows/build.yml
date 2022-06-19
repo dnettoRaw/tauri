@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 12:24:52 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/19 13:49:53 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -20,8 +20,8 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-       os: [ self-hosted ] 
-       #os: [windows-latest, ubuntu-latest, macOs-latest]
+      os: [ self-hosted ] 
+        # os: [windows-latest, ubuntu-latest, macOs-latest]
 
     env:
       RUST_VERSION: 1.61.0
@@ -70,5 +70,5 @@ jobs:
       
       - name: echo
         run: |
-          echo "${{matrix.NAME}} ${{ matrix.os }} ${{ matrix.kind }} " 
+          echo "${{matrix.NAME}} ${{ matrix.os }} ${{ matrix.kind }}  v__VERSION__  v__NAME__" 
           echo "Build finished" 
