@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/20 18:05:02 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 18:26:42 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -81,8 +81,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/msi/my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
-          asset_name: my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
+          asset_path: ./src-tauri/target/release/bundle/msi/myapp.msi #my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
+          asset_name: myapp.msi #my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
           asset_content_type: application/octet-stream
       # Linux
       - name: Upload the linux installer asset
@@ -92,8 +92,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/deb/my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
-          asset_name: my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
+          asset_path: ./src-tauri/target/release/bundle/deb/myapp.appimage #my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
+          asset_name: myapp.appimage #my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
           asset_content_type: application/octet-stream
       # Mac
       - name: Upload the mac installer asset
@@ -103,8 +103,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/dmg/my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
-          asset_name: my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
+          asset_path: ./src-tauri/target/release/bundle/dmg/myapp.app #my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
+          asset_name: myapp.app #my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
           asset_content_type: application/octet-stream
       - name: Remove useless folders
         run: >
@@ -120,3 +120,5 @@ jobs:
         with:
           name: my-app-latest-release-${{matrix.NAME}}-x64-installer-portable
           path: src-tauri/target/release
+
+          /src-tauri/target/release/bundle/macos/myapp.app
