@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/20 18:26:42 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 18:28:18 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -120,5 +120,3 @@ jobs:
         with:
           name: my-app-latest-release-${{matrix.NAME}}-x64-installer-portable
           path: src-tauri/target/release
-
-          /src-tauri/target/release/bundle/macos/myapp.app
