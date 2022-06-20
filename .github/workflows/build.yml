@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 14:25:28 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 20:58:44 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -20,7 +20,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest, macOs-latest]
+        os: [ ubuntu-latest, macOs-latest ] # windows-latest
         # os: [ self-hosted ] 
 
     env:
@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: install webkit2gtk
+      - name: install webkit2gtk (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
@@ -53,6 +53,10 @@ jobs:
         run: |
           yarn
           yarn tauri build
+      
+      - name: log 
+        run: |
+          ls -LaR ./src-tauri/target/release/bundle
 
       - name: Release App
         uses: softprops/action-gh-release@master
@@ -64,9 +68,9 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           draft: true
           files: |
-            src-tauri/target/release/bundle/dmg/myapp.dmg
-            src-tauri/target/release/bundle/deb/myapp.deb
-            src-tauri/target/release/bundle/msi/myapp.msi
+            src-tauri/target/release/bundle/dmg/myapp___VERSION___x64.dmg
+            src-tauri/target/release/bundle/deb/myapp___VERSION___x64.deb
+            src-tauri/target/release/bundle/msi/myapp___VERSION___x64.msi
       
       - name: echo
         run: |
