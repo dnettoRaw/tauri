@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/19 14:38:04 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 18:05:02 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -23,6 +23,7 @@ jobs:
             NAME: linux
           - os: windows-latest
             NAME: windows
+            
     runs-on: ${{ matrix.os}}
     steps:
       - uses: actions/checkout@v2
@@ -68,9 +69,10 @@ jobs:
           path: package.json
           prop_path: version
       - name: log
-        run: >
-          echo "::set-output name=version::${{steps.version.outputs.prop}}"
+        run: |
           ls -la
+          echo "::set-output name=version::${{steps.version.outputs.prop}}"
+          ls -laR ./src-tauri
       # Windows
       - name: Upload the windows installer asset
         if: runner.os == 'Windows'
