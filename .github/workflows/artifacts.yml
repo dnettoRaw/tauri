@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: artifacts.yml                         #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/20 18:28:18 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 19:57:41 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Release Artifacts
@@ -31,21 +31,25 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 18.3
+
       - name: Install rust stable
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+
       - name: Install webkit2gtk (ubuntu only)
         if: matrix.NAME == 'linux'
         run: >
           sudo apt-get update
           
           sudo apt-get install -y webkit2gtk-4.0
+
       - name: Install app dependencies and build it
         run: npm i && npm run build
       - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: octokit/request-action@v2.x
         id: get_latest_release
         with:
@@ -53,6 +57,7 @@ jobs:
           repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: Get upload url
         id: get_upload_url
         run: >
@@ -81,7 +86,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/msi/myapp.msi #my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
+          asset_path: ./src-tauri/target/release/bundle/msi/myapp_${{steps.version.outputs.prop}}_x64.msi #my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
           asset_name: myapp.msi #my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
           asset_content_type: application/octet-stream
       # Linux
@@ -92,8 +97,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/deb/myapp.appimage #my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
-          asset_name: myapp.appimage #my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
+          asset_path: ./src-tauri/target/release/bundle/deb/myapp_${{steps.version.outputs.prop}}_x64.appimage
+          asset_name: myapp_${{steps.version.outputs.prop}}_x64.appimage #my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
           asset_content_type: application/octet-stream
       # Mac
       - name: Upload the mac installer asset
@@ -103,8 +108,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/bundle/dmg/myapp.app #my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
-          asset_name: myapp.app #my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
+          asset_path: ./src-tauri/target/release/bundle/dmg/myapp_${{steps.version.outputs.prop}}_x64.dmg
+          asset_name: myapp_${{steps.version.outputs.prop}}_x64.dmg #my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
           asset_content_type: application/octet-stream
       - name: Remove useless folders
         run: >
