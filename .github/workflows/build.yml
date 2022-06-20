@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/20 20:58:44 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/20 21:10:39 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -56,7 +56,7 @@ jobs:
       
       - name: log 
         run: |
-          ls -LaR ./src-tauri/target/release/bundle
+          ls -LaR ./src-tauri
 
       - name: Release App
         uses: softprops/action-gh-release@master
