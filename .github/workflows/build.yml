@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/21 10:34:33 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/21 10:45:42 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -21,8 +21,8 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, macOs-latest ] # windows-latest
-        # os: [ self-hosted ]
-        
+        # os: [ self-hosted ] 
+
     env:
       RUST_VERSION: 1.61.0
       NODE_VERSION: 18.3
@@ -42,11 +42,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ env.NODE_VERSION }}
-     
-     - name: get-npm-version
-        id: package-version
-      uses: martinbeentjes/npm-get-version-action@main
 
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@main
+      
       - name: install webkit2gtk (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -74,21 +74,7 @@ jobs:
           releaseBody: "See the assets to download this version and install."
           draft: true
           files: |
-            src-tauri/target/release/bundle/dmg/myapp__${{ steps.package-version.outputs.current-version}}_x64.dmg
-            src-tauri/target/release/bundle/deb/myapp__${{ steps.package-version.outputs.current-version}}_x64.deb
-            src-tauri/target/release/bundle/msi/myapp__${{ steps.package-version.outputs.current-version}}_x64.msi
-
-      - name: Remove useless folders
-        run: >
-          rm -rf src-tauri/target/release/build
-
-          rm -rf src-tauri/target/release/deps
-          
-          rm -rf src-tauri/target/release/bundle
-        shell: bash
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-app-latest-release-${{matrix.os}}-x64-installer-portable
-          path: src-tauri/target/release
+            src-tauri/target/release/bundle/dmg/myapp_${{ steps.package-version.outputs.current-version}}_x64.dmg
+            src-tauri/target/release/bundle/deb/myapp_${{ steps.package-version.outputs.current-version}}_x64.deb
+            src-tauri/target/release/bundle/msi/myapp_${{ steps.package-version.outputs.current-version}}_x64.msi
+      
