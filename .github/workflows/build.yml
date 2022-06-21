@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/21 10:26:29 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/21 10:32:24 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -20,17 +20,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        include:
-          - kind: mac-intel
-              os: macos-latest
-              NAME: mac
-          - kind: linux-x86_64
-              os: ubuntu-latest
-              NAME: linux
-          - kind: windows-x86_64
-              os: windows-latest
-              NAME: windows 
-        # os: [ ubuntu-latest, macOs-latest ] # windows-latest
+        os: [ ubuntu-latest, macOs-latest ] # windows-latest
         # os: [ self-hosted ] 
 
     env:
@@ -71,7 +61,7 @@ jobs:
       - name: log 
         run: |
           echo "::set-output name=version::$(cat package.json | jq -r '.version')"
-          echo ":: ${{ matrix.kind }} ${{ matrix.os }} ${{ matrix.NAME }} ${{ steps.package-version.outputs.current-version}} ::"
+          echo ":: ${{ matrix.kind }} ${{ matrix.os }}  ${{ steps.package-version.outputs.current-version}} ::"
           ls -LaR ./src-tauri
 
       - name: Release App
@@ -100,5 +90,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: my-app-latest-release-${{matrix.NAME}}-x64-installer-portable
+          name: my-app-latest-release-${{matrix.os}}-x64-installer-portable
           path: src-tauri/target/release
