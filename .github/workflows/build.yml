@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/21 10:32:24 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/21 10:34:33 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -21,8 +21,8 @@ jobs:
     strategy:
       matrix:
         os: [ ubuntu-latest, macOs-latest ] # windows-latest
-        # os: [ self-hosted ] 
-
+        # os: [ self-hosted ]
+        
     env:
       RUST_VERSION: 1.61.0
       NODE_VERSION: 18.3
