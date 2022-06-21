@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/21 10:45:42 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/21 11:17:54 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -43,9 +43,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: get-npm-version
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@main
+      - uses: nyaa8/package-version@v1
       
       - name: install webkit2gtk (ubuntu only)
         if: matrix.os == 'ubuntu-latest'
@@ -61,7 +59,7 @@ jobs:
       - name: log 
         run: |
           echo "::set-output name=version::$(cat package.json | jq -r '.version')"
-          echo ":: ${{ matrix.kind }} ${{ matrix.os }}  ${{ steps.package-version.outputs.current-version}} ::"
+          echo ":: ${{ matrix.kind }} ${{ matrix.os }}  ${{ env.PACKAGE_VERSION }} ::"
           ls -LaR ./src-tauri
 
       - name: Release App
@@ -69,12 +67,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v${{ steps.package-version.outputs.current-version}} # the action automatically replaces \_\_VERSION\_\_ with the app version
-          releaseName: "TAURI Templaite Realesa v${{ steps.package-version.outputs.current-version}}"
+          tagName: v${{ env.PACKAGE_VERSION }} # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: "TAURI Templaite Realesa v${{ env.PACKAGE_VERSION }}"
           releaseBody: "See the assets to download this version and install."
           draft: true
           files: |
-            src-tauri/target/release/bundle/dmg/myapp_${{ steps.package-version.outputs.current-version}}_x64.dmg
-            src-tauri/target/release/bundle/deb/myapp_${{ steps.package-version.outputs.current-version}}_x64.deb
-            src-tauri/target/release/bundle/msi/myapp_${{ steps.package-version.outputs.current-version}}_x64.msi
+            src-tauri/target/release/bundle/dmg/myapp_${{ env.PACKAGE_VERSION }}_x64.dmg
+            src-tauri/target/release/bundle/deb/myapp_${{ env.PACKAGE_VERSION }}_x64.deb
+            src-tauri/target/release/bundle/msi/myapp_${{ env.PACKAGE_VERSION }}_x64.msi
       
