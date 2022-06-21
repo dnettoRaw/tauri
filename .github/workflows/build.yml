@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/21 10:23:45 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/21 10:26:29 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -21,12 +21,15 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-latest
-            NAME: mac
-          - os: ubuntu-latest
-            NAME: linux
-          - os: windows-latest
-            NAME: windows 
+          - kind: mac-intel
+              os: macos-latest
+              NAME: mac
+          - kind: linux-x86_64
+              os: ubuntu-latest
+              NAME: linux
+          - kind: windows-x86_64
+              os: windows-latest
+              NAME: windows 
         # os: [ ubuntu-latest, macOs-latest ] # windows-latest
         # os: [ self-hosted ] 
 
