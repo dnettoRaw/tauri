@@ -1,9 +1,9 @@
 #       #######                                                #
 #    ###       ###                                             #
-#   ##   ## ##   ##   F: relesase.yml                          #
+#   ##   ## ##   ##   F: relesase.old                          #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:56 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/18 18:01:58 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/22 11:50:36 by:dnettoRaw      #
 #     ###########                                              #
 
 name: "publish"
@@ -46,3 +46,5 @@ jobs:
         releaseBody: "See the assets to download this version and install."
         releaseDraft: true
         prerelease: false
+
+        
