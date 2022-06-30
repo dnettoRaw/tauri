@@ -3,7 +3,7 @@
 #   ##   ## ##   ##   F: build.yml                             #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:48 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/30 13:08:45 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/30 13:25:10 by:dnettoRaw      #
 #     ###########                                              #
 
 name: Build
@@ -14,33 +14,67 @@ on:
       - release
 
 jobs:
-  test-tauri:
+  build:
+    name: ${{ matrix.kind }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
     strategy:
-      fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ ubuntu-latest, macOs-latest ] # windows-latest
+        # os: [ self-hosted ] 
 
-    runs-on: ${{ matrix.platform }}
+    env:
+      RUST_VERSION: 1.61.0
+      NODE_VERSION: 18.3
+      GH_ACTIONS: true
+      RUST_BACKTRACE: full
+
     steps:
-    - uses: actions/checkout@v2
-    - name: setup node
-      uses: actions/setup-node@v1
-      with:
-        node-version: 16
-    - name: install Rust stable
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: stable
-    - name: install dependencies (ubuntu only)
-      if: matrix.platform == 'ubuntu-latest'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-    - name: install app dependencies and build it
-      run: yarn && yarn build
-    - uses: tauri-apps/tauri-action@v0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Install rust
+        uses: hecrj/setup-rust-action@v1
+        with:
+          rust-version: ${{ env.RUST_VERSION }}
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - uses: nyaa8/package-version@v1
+      
+      - name: install webkit2gtk (ubuntu only)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y webkit2gtk-4.0
+      - name: Build application
+        run: |
+          yarn
+          yarn tauri build
+      
+      - name: log 
+        run: |
+          echo "::set-output name=version::$(cat package.json | jq -r '.version')"
+          echo ":: ${{ matrix.kind }} ${{ matrix.os }}  ${{ env.PACKAGE_VERSION }} ::"
+          ls -LaR ./src-tauri
+          
+      - name: Release App
+        uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: v${{ env.PACKAGE_VERSION }} # the action automatically replaces \_\_VERSION\_\_ with the app version
+          releaseName: "TAURI Templaite Realesa v${{ env.PACKAGE_VERSION }}"
+          releaseBody: "See the assets to download this version and install."
+          draft: true
+          files: |
+            src-tauri/target/release/bundle/dmg/myapp_${{ env.PACKAGE_VERSION }}_x64.dmg
+            src-tauri/target/release/bundle/deb/myapp_${{ env.PACKAGE_VERSION }}_x64.deb
+            src-tauri/target/release/bundle/msi/myapp_${{ env.PACKAGE_VERSION }}_x64.msi
+
   # setup-env:
   #   runs-on: ubuntu-latest
   #   steps:
