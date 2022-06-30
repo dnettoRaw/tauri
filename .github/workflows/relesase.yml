@@ -1,12 +1,14 @@
 #       #######                                                #
 #    ###       ###                                             #
-#   ##   ## ##   ##   F: relesase.old                          #
+#   ##   ## ##   ##   F: relesase.yml                          #
 #        ## ##                                                 #
 #                     C: 2022/06/18 18:01:56 by:dnettoRaw      #
-#   ##   ## ##   ##   U: 2022/06/22 11:50:36 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/30 15:48:12 by:dnettoRaw      #
 #     ###########                                              #
 
-name: "publish"
+# https://github.com/tauri-apps/tauri-action
+
+name: "publish release"
 on:
   push:
     branches:
@@ -17,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ macos-latest, ubuntu-latest, windows-latest]
+        platform: [macos-latest, ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -37,7 +39,7 @@ jobs:
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
     - name: install app dependencies and build it
       run: yarn && yarn build
-    - uses: tauri-apps/tauri-action@v0.2
+    - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -46,5 +48,3 @@ jobs:
         releaseBody: "See the assets to download this version and install."
         releaseDraft: true
         prerelease: false
-
-        
