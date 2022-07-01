@@ -1,107 +1,95 @@
-name: Release Artifacts
-on:
-  push:
-    branches:
-      - dev
+#       #######                                                #
+#    ###       ###                                             #
+#   ##   ## ##   ##   F: artifacts.yml                         #
+#        ## ##                                                 #
+#                     C: 2022/06/18 18:00:46 by:dnettoRaw      #
+#   ##   ## ##   ##   U: 2022/06/30 15:47:44 by:dnettoRaw      #
+#     ###########                                              #
+
+# https://github.com/tauri-apps/tauri-action
+
+name: 'My Workflow'
+
+on: pull_request
+
 jobs:
-  test-tauri:
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - os: macos-latest
-            NAME: mac
-          - os: ubuntu-latest
-            NAME: linux
-          - os: windows-latest
-            NAME: windows
-    runs-on: ${{ matrix.os}}
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.create-release.outputs.result }}
+
     steps:
       - uses: actions/checkout@v2
-      - name: Setup node
+      - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: 16
-      - name: Install rust stable
-        uses: actions-rs/toolchain@v1
+      - name: get version
+        run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+      - name: create release
+        id: create-release
+        uses: actions/github-script@v6
         with:
-          toolchain: stable
-      - name: Install webkit2gtk (ubuntu only)
-        if: matrix.NAME == 'linux'
-        run: >
-          sudo apt-get update
+          script: |
+            const { data } = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: `app-v${process.env.PACKAGE_VERSION}`,
+              name: `Desktop App v${process.env.PACKAGE_VERSION}`,
+              body: 'Take a look at the assets to download and install this app.',
+              draft: true,
+              prerelease: false
+            })
+            
+            return data.id
 
-          sudo apt-get install -y webkit2gtk-4.0
-      - name: Install app dependencies and build it
-        run: npm i && npm run build
-      - uses: tauri-apps/tauri-action@v0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: octokit/request-action@v2.x
-        id: get_latest_release
-        with:
-          route: GET /repos/:repository/releases?per_page=1
-          repository: ${{ github.repository }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Get upload url
-        id: get_upload_url
-        run: >
-          url=$(echo "$response" | jq -r ".[0].upload_url")
+  build-tauri:
+    needs: create-release
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
 
-          echo "::set-output name=url::$url"
-        env:
-          response: ${{ steps.get_latest_release.outputs.data }}
-        shell: bash
-      - name: Get version
-        id: version
-        uses: notiz-dev/github-action-json-property@release
-        with:
-          path: package.json
-          prop_path: version
-      # Windows
-      - name: Upload the windows installer asset
-        if: runner.os == 'Windows'
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
-          asset_name: my-app-${{steps.version.outputs.prop}}-windows-x64-installer.msi
-          asset_content_type: application/octet-stream
-      # Linux
-      - name: Upload the linux installer asset
-        if: runner.os == 'Linux'
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
-          asset_name: my-app-${{steps.version.outputs.prop}}-linux-x64-installer.appimage
-          asset_content_type: application/octet-stream
-      # Mac
-      - name: Upload the mac installer asset
-        if: runner.os == 'macOS'
-        uses: actions/upload-release-asset@v1.0.2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{steps.get_upload_url.outputs.url}}
-          asset_path: ./src-tauri/target/release/my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
-          asset_name: my-app-${{steps.version.outputs.prop}}-mac-x64-installer.dmg
-          asset_content_type: application/octet-stream
-      - name: Remove useless folders
-        run: >
-          rm -rf src-tauri/target/release/build
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: install Rust stable
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+    - name: install dependencies (ubuntu only)
+      if: matrix.platform == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+    - name: install app dependencies and build it
+      run: yarn && yarn build
+    - uses: tauri-apps/tauri-action@v0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        releaseId: ${{ needs.create-release.outputs.release_id }}
 
-          rm -rf src-tauri/target/release/deps
-          
-          rm -rf src-tauri/target/release/bundle
-        shell: bash
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+  publish-release:
+    runs-on: ubuntu-latest
+    needs: [ create-release, build-tauri ]
+    
+    steps:
+      - name: publish release
+        id: publish-release
+        uses: actions/github-script@v6
+        env:
+          release_id: ${{ needs.create-release.outputs.release_id }}
         with:
-          name: my-app-latest-release-${{matrix.NAME}}-x64-installer-portable
-          path: src-tauri/target/release
+          script: |
+            github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: process.env.release_id,
+              draft: false,
+              prerelease: false
+            })
